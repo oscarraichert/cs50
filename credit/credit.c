@@ -2,15 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-void set_first_digits(char *first_digits, char *input);
-void validate_card(char *input, char *first_digits, char *flag);
+int validate_digits(char *input, char *flag);
 int validate_checksum(char *input);
 
 int main() {
   char input[20];
   char flag[20];
   long long number;
-  char first_digits[3];
 
   do {
     printf("Number: ");
@@ -19,44 +17,52 @@ int main() {
     number = atoll(input);
   } while (number < 1);
 
-  set_first_digits(first_digits, input);
-  validate_card(input, first_digits, flag);
+  int valid_checksum = validate_checksum(input);
+
+  if (!valid_checksum) {
+    strcat(flag, "INVALID");
+    printf("%s\n", flag);
+    return 0;
+  }
+
+  int valid_digits = validate_digits(input, flag);
+
+  if (!valid_digits) {
+    printf("%s\n", flag);
+    return 0;
+  }
 
   printf("%s\n", flag);
 }
 
-void set_first_digits(char *first_digits, char *input) {
+int validate_digits(char *input, char *flag) {
+  char first_digits[3];
+
   for (int i = 0; i < 2; i++) {
     first_digits[0] = input[0];
     first_digits[1] = input[1];
   }
-}
-
-void validate_card(char *input, char *first_digits, char *flag) {
-
-  int valid_checksum = validate_checksum(input);
 
   if (strlen(input) == 15 && first_digits[0] == '3' &&
       (first_digits[1] == '4' || first_digits[1] == '7')) {
     strcat(flag, "AMEX");
+    return 1;
   }
 
   else if (strlen(input) == 16 && first_digits[0] == '5' &&
            (first_digits[1] - '0' >= 1 && first_digits[1] - '0' <= 5)) {
     strcat(flag, "MASTERCARD");
+    return 1;
   }
 
   else if ((strlen(input) == 13 || strlen(input) == 16) && input[0] == '4') {
     strcat(flag, "VISA");
+    return 1;
   }
 
   else {
     strcat(flag, "INVALID");
-  }
-
-  if (!valid_checksum) {
-    strcat(flag, "INVALID");
-    return;
+    return 0;
   }
 }
 
