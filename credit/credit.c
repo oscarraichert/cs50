@@ -6,11 +6,9 @@ int validate_digits(char *input, char *flag);
 int validate_checksum(char *input);
 
 int main() {
-  char input[20];
-  char flag[20];
-  long long number;
-  input[0] = 0;
-  flag[0] = 0;
+  char input[20] = {0};
+  char flag[20] = {0};
+  long long number = 0;
 
   do {
     printf("Number: ");
@@ -71,7 +69,7 @@ int validate_checksum(char *input) {
 
   for (int i = 0; i < num_len; i++) {
     if (is_odd == 1) {
-      char current_digit[2];
+      char current_digit[3] = {0};
 
       if (i % 2 > 0) {
         sprintf(current_digit, "%d", (input[i] - '0') * 2);
@@ -82,7 +80,7 @@ int validate_checksum(char *input) {
     }
 
     else if (!is_odd) {
-      char current_digit[2];
+      char current_digit[3] = {0};
 
       if (i % 2 == 0) {
         sprintf(current_digit, "%d", (input[i] - '0') * 2);
