@@ -9,6 +9,8 @@ int main() {
   char input[20];
   char flag[20];
   long long number;
+  input[0] = 0;
+  flag[0] = 0;
 
   do {
     printf("Number: ");
