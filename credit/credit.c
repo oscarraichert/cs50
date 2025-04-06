@@ -36,21 +36,14 @@ int main() {
 }
 
 int validate_digits(char *input, char *flag) {
-  char first_digits[3];
-
-  for (int i = 0; i < 2; i++) {
-    first_digits[0] = input[0];
-    first_digits[1] = input[1];
-  }
-
-  if (strlen(input) == 15 && first_digits[0] == '3' &&
-      (first_digits[1] == '4' || first_digits[1] == '7')) {
+  if (strlen(input) == 15 && input[0] == '3' &&
+      (input[1] == '4' || input[1] == '7')) {
     strcat(flag, "AMEX");
     return 1;
   }
 
-  else if (strlen(input) == 16 && first_digits[0] == '5' &&
-           (first_digits[1] - '0' >= 1 && first_digits[1] - '0' <= 5)) {
+  else if (strlen(input) == 16 && input[0] == '5' &&
+           (input[1] - '0' >= 1 && input[1] - '0' <= 5)) {
     strcat(flag, "MASTERCARD");
     return 1;
   }
